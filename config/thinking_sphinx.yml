@@ -14,4 +14,4 @@ test:
   mysql41: 9313
 production:
   <<: *defaults
-  configuration_file: "/srv/www/vhosts/suse.com/hackweek/shared/sphinx/config/production.sphinx.conf"
+  configuration_file: "//srv/www/apps/i2p/shared/sphinx/config/production.sphinx.conf"
