@@ -34,6 +34,8 @@ gem 'bootstrap-sass'
 gem 'font-awesome-rails'
 # as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
+# as JavaScript runtime
+gem 'therubyracer'
 # as JavaScript library
 gem 'jquery-rails'
 gem 'jquery-hotkeys-rails'
