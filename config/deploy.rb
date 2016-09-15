@@ -68,7 +68,7 @@ task :deploy => :environment do
     invoke :notify_errbit
 
     to :launch do
-      queue "/etc/init.d/apache2 restart"
+      queue "sudo /usr/sbin/rcapache2 restart"
       invoke :sphinx_restart
     end
   end
