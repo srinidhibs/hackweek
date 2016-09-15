@@ -17,7 +17,7 @@ set :branch, 'master'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'config/application.yml', 'config/secrets.yml', 'log', 'tmp', 'public/gallery', 'en.pak', 'sphinx']
+set :shared_paths, ['config/database.yml', 'config/application.yml', 'config/initializers/devise.rb', 'config/secrets.yml', 'log', 'tmp', 'public/gallery', 'en.pak', 'sphinx']
 
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
@@ -72,6 +72,50 @@ task :deploy => :environment do
       invoke :sphinx_restart
     end
   end
+end
+
+desc "Populate devise configuration"
+task :'setup:devise' => :environment do
+  puts "Enter email address used for sending email confirmation"
+  mailer_sender = STDIN.gets.chomp
+  puts "What is your base URL for iChain authentication? (starts with https://)"
+  ichain_base_url = STDIN.gets.chomp
+  puts "Which HTTP header will contain username? (e.g., HTTP_X_USERNAME)"
+  ichain_username_header = STDIN.gets.chomp
+  puts "Any additional headers other than username, that you'll receive? (e.g., {:email => 'HTTP_X_EMAIL'})"
+  ichain_attribute_headers = STDIN.gets.chomp
+  puts "What is your iChain logout path? (e.g., /AGLogout)"
+  ichain_logout_path = STDIN.gets.chomp
+  puts "---- If you need to set additional parameters, please refer to"
+  puts "---- config/initializers/devise.rb and update shared/config/initializers/devise.rb"
+
+  devise_config = <<-DEVISE_CONFIG
+    Devise.setup do |config|
+      config.secret_key = Rails.application.secrets.devise_secret_key
+      config.mailer_sender = '#{mailer_sender}'
+      require 'devise/orm/active_record'
+      config.case_insensitive_keys = [ :email ]
+      config.strip_whitespace_keys = [ :email ]
+      config.skip_session_storage = [:http_auth]
+      config.stretches = Rails.env.test? ? 1 : 10
+      config.reconfirmable = true
+      config.password_length = 6..128
+      config.reset_password_within = 6.hours
+      config.ichain_base_url = '#{ichain_base_url}'
+      config.ichain_username_header = '#{ichain_username_header}'
+      config.ichain_attribute_headers = '#{ichain_attribute_headers}'
+      config.ichain_logout_path = '#{ichain_logout_path}'
+      config.sign_out_via = :delete
+      config.warden do |manager|
+        manager.failure_app = CustomFailure
+      end
+    end
+  DEVISE_CONFIG
+  queue! %{
+    echo "----> Populating devise.rb"
+    echo "#{devise_config}" > #{deploy_to}/shared/config/initializers/devise.rb
+    echo "----> Done populating devise.rb"
+  }
 end
 
 desc "Notifies the exception handler of the deploy."
