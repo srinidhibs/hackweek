@@ -17,7 +17,7 @@ set :branch, 'i2p'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'config/application.yml', 'config/secrets.yml', 'log', 'tmp', 'public/gallery', 'en.pak', 'sphinx', 'public/system']
+set :shared_paths, ['config/database.yml', 'config/application.yml', 'config/secrets.yml', 'log', 'tmp', 'public/gallery', 'en.pak', 'sphinx']
 
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
@@ -37,15 +37,23 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/shared/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
 
+  queue! %[mkdir -p "#{deploy_to}/shared/public/gallery"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public/gallery"]
+
   queue! %[touch "#{deploy_to}/shared/config/database.yml"]
   queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
 
   queue! %[touch "#{deploy_to}/shared/config/application.yml"]
   queue  %[echo "-----> Be sure to edit 'shared/config/application.yml'."]
 
+  queue! %[touch "#{deploy_to}/shared/config/secrets.yml"]
+  queue  %[echo "-----> Be sure to edit 'shared/config/secrets.yml'."]
+
   queue! %[mkdir -p "#{deploy_to}/shared/sphinx/db"]
   queue! %[mkdir -p "#{deploy_to}/shared/sphinx/pids"]
   queue! %[mkdir -p "#{deploy_to}/shared/sphinx/binlog"]
+  queue! %[mkdir -p "#{deploy_to}/shared/sphinx/config"]
+  queue! %[touch "#{deploy_to}/shared/sphinx/config/production.sphinx.conf"]
   queue! %[wget 'http://sphinxsearch.com/files/dicts/en.pak' -O "#{deploy_to}/shared/en.pak"]
 end
 
