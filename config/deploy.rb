@@ -3,17 +3,17 @@ require 'mina/rails'
 require 'mina/git'
 
 # The hostname to SSH to
-set :domain, 'proxy-opensuse.suse.de'
+set :domain, 'blri2p01.blr.novell.com'
 # SSH port number
-set :port, '2211'
+set :port, '22'
 # Username in the server to SSH to
-set :user, 'root'
+set :user, 'srinidhi'
 # Path to deploy into
-set :deploy_to, '/srv/www/vhosts/suse.com/hackweek'
+set :deploy_to, '/srv/www/apps/iclub'
 # Git repo to clone from
-set :repository, 'https://github.com/SUSE/hackweek.git'
+set :repository, 'https://github.com/srinidhibs/hackweek.git'
 # Branch name to deploy
-set :branch, 'master'
+set :branch, 'iclub'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
