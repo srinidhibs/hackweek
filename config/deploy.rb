@@ -37,8 +37,14 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/shared/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
 
+  queue! %[mkdir -p "#{deploy_to}/shared/config/initializers"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config/initializers"]
+
   queue! %[mkdir -p "#{deploy_to}/shared/public/gallery"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public/gallery"]
+
+  queue! %[touch "#{deploy_to}/shared/config/initializers/devise.rb"]
+  queue  %[echo "-----> Be sure to edit 'shared/config/initializers/devise.rb'."]
 
   queue! %[touch "#{deploy_to}/shared/config/database.yml"]
   queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
