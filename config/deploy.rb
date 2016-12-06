@@ -43,9 +43,6 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/shared/public/gallery"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public/gallery"]
 
-  queue! %[touch "#{deploy_to}/shared/config/initializers/devise.rb"]
-  queue  %[echo "-----> Be sure to edit 'shared/config/initializers/devise.rb'."]
-
   queue! %[touch "#{deploy_to}/shared/config/database.yml"]
   queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
 
@@ -69,6 +66,7 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
+    invoke :'setup:devise'
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
     invoke :notify_errbit
