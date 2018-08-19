@@ -170,14 +170,14 @@ class ProjectsController < ApplicationController
   # PUT /projects/1/add_hackweek/1
   def add_episode
     @project.episodes = @project.episodes | [@episode]
-    flash.now['success'] = "Added hackweek #{@episode.name}"
+    flash.now['success'] = "Added #{ENV["SITE_NAME"].downcase} #{@episode.name}"
     render 'episode_list'
   end
 
   # DELETE /projects/1/delete_hackweek/2
   def delete_episode
     @project.episodes.delete(@episode)
-    flash.now['success'] = "Removed hackweek #{@episode.name}"
+    flash.now['success'] = "Removed #{ENV["SITE_NAME"].downcase} #{@episode.name}"
     render 'episode_list'
   end
 

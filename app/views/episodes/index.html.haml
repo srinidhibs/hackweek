@@ -1,5 +1,5 @@
 - content_for :title do
-  Hackweeks
+  #{ENV["SITE_NAME"]}s
 
 .row
   .col-sm-12
@@ -27,7 +27,7 @@
                 %td
                   = render :partial => "episodes/file_buttons", :locals => {:episode => episode }
     - else
-      No hackweeks yet.
+      No #{ENV["SITE_NAME"].downcase}s yet.
     %p
       - if can? :write, Episode
-        = link_to "New Hackweek", new_episode_path, :class => "btn btn-success pull-right"
+        = link_to "New #{ENV["SITE_NAME"]}", new_episode_path, :class => "btn btn-success pull-right"

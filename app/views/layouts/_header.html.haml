@@ -15,15 +15,15 @@
         %li.dropdown
           = link_to(projects_path(@episode), {class: "navbar-brand"}) do
             - if @episode == :all
-              = "All Hackweeks"
+              = "All #{ENV["SITE_NAME"]}s"
             - else
               = @episode.name if @episode
           = link_to('#', {class: "dropdown-toggle navbar-brand", "data-toggle"=>"dropdown"} ) do
             %i.fa.fa-caret-square-o-down
           %ul.dropdown-menu{:role => "menu"}
             %li{:role => "presentation"}
-              = link_to(projects_path(:all), {title: "Projects for all hackweeks"}) do
-                All Hackweeks
+              = link_to(projects_path(:all), {title: "Projects for all #{ENV["SITE_NAME"]}s"}) do
+                All #{ENV["SITE_NAME"]}s
             - Episode.all.reverse.each do |episode|
               %li{:role => "presentation"}
                 = link_to(projects_path(episode), {title: "Projects for #{episode.name}"}) do
@@ -60,7 +60,7 @@
         %ul.nav.navbar-nav.navbar-right.visible-xs
           %li{role: "presentation", class: "divider"}
           %li{role: "presentation", class: "dropdown-header"}
-            Hackweeks
+            #{ENV["SITE_NAME"]}s
           - Episode.all.reverse.each do |episode|
             %li
               = link_to(projects_path(episode), {title: "Projects for #{episode}"}) do

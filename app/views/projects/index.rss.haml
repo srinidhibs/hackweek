@@ -12,8 +12,8 @@
       %title Newest #{ @episode.name } projects
       %description These are the newest projects for #{ @episode.name }
     -else
-      %title Newest projects (all Hackweeks)
-      %description These are the newest projects for all Hackweeks
+      %title Newest projects (all #{ENV["SITE_NAME"]}s)
+      %description These are the newest projects for all #{ENV["SITE_NAME"]}s
 
     -@newest.each do |project|
       %item

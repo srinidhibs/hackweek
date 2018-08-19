@@ -2,7 +2,7 @@
   .btn-group.pull-right
     %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
       %i.fa.fa-plus
-      Add Hackweek
+      Add #{ENV["SITE_NAME"]}
       %span.caret
     %ul.dropdown-menu{:role => "menu"}
       - Episode.all.reverse.each do |episode|

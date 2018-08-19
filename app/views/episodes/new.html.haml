@@ -1,7 +1,7 @@
 - content_for :title do
-  Create Hackweek
+  Create #{ENV["SITE_NAME"]}
 
 .row
   .col-sm-12
-    %h2 Create a Hackweek
+    %h2 Create a #{ENV["SITE_NAME"]}
     = render 'form'

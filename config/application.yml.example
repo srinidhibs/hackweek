@@ -11,3 +11,9 @@ HACKWEEK_DEVISE_SECRET_KEY: '12345'
 # HACKWEEK_ERRBIT_API_KEY: '12345' 
 # HACKWEEK_ERRBIT_HOST: errbit.example.com
 # HACKWEEK_ERRBIT_PROJECT_ID: '56kskscb02dc71fa0932000007'
+
+SITE_TITLE:  'SUSE Hack Week'
+SITE_NAME:   'Hack Week'
+SITE_ORG:    'SUSE'
+SITE_DESC:   '${ENV["SITE_NAME"} is the week where #{ENV["SITE_ORG"]} engineers can experiment without limits. This is the opportunity to innovate, collaborate across teams and learn.'
+SITE_EMAIL:  'hackweek@suse.de'

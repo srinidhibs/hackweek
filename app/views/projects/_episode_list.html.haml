@@ -1,5 +1,5 @@
 - unless @project.episodes.any?
-  No hackweek.
+  No #{ENV["SITE_NAME"]}.
   - if can? :delete_episode, @project
     How about you add one...
 - @project.episodes.each do |episode|
